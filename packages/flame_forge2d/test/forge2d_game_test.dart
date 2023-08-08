@@ -1,3 +1,5 @@
+import 'dart:ui' show AppLifecycleState;
+
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:test/test.dart';
 
@@ -50,4 +52,31 @@ void main() {
       });
     },
   );
+
+  group('pauseWhenBackgrounded:', () {
+    test('true', () async {
+      final game = Forge2DGame(
+        pauseWhenBackgrounded: true,
+      );
+
+      game.lifecycleStateChange(AppLifecycleState.paused);
+      expect(game.paused, true);
+
+      game.lifecycleStateChange(AppLifecycleState.resumed);
+      expect(game.paused, false);
+    });
+
+    test('false', () async {
+      final game = Forge2DGame(
+        // ignore: avoid_redundant_argument_values
+        pauseWhenBackgrounded: false,
+      );
+
+      game.lifecycleStateChange(AppLifecycleState.paused);
+      expect(game.paused, false);
+
+      game.lifecycleStateChange(AppLifecycleState.resumed);
+      expect(game.paused, false);
+    });
+  });
 }
