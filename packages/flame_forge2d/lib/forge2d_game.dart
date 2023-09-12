@@ -52,16 +52,20 @@ class Forge2DGame extends FlameGame {
   @override
   @mustCallSuper
   void lifecycleStateChange(AppLifecycleState state) {
+    // TODO(adil192): Remove print statements
+    print('lifecycleStateChange: $state');
     switch (state) {
       case AppLifecycleState.resumed:
       case AppLifecycleState.inactive:
         if (_pausedBecauseBackgrounded) {
+          print('Resuming engine');
           resumeEngine();
         }
       case AppLifecycleState.paused:
       case AppLifecycleState.detached:
       case AppLifecycleState.hidden:
         if (pauseWhenBackgrounded) {
+          print('Pausing engine');
           pauseEngine();
           _pausedBecauseBackgrounded = true;
         }
