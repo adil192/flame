@@ -1,6 +1,5 @@
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/world_contact_listener.dart';
-import 'package:flutter/material.dart';
 import 'package:forge2d/forge2d.dart';
 
 class Forge2DGame extends FlameGame {
@@ -9,7 +8,7 @@ class Forge2DGame extends FlameGame {
     double zoom = defaultZoom,
     Camera? camera,
     ContactListener? contactListener,
-    this.pauseWhenBackgrounded = false,
+    super.pauseWhenBackgrounded,
   })  : world = World(gravity ?? defaultGravity),
         super(camera: camera ?? Camera()) {
     // ignore: deprecated_member_use
@@ -22,14 +21,6 @@ class Forge2DGame extends FlameGame {
   static const double defaultZoom = 10.0;
 
   final World world;
-
-  /// Whether the game should pause when the app is backgrounded.
-  ///
-  /// If true, the first update after the app is foregrounded will be skipped.
-  ///
-  /// Defaults to false.
-  bool pauseWhenBackgrounded;
-  bool _pausedBecauseBackgrounded = false;
 
   @override
   void update(double dt) {
@@ -47,36 +38,5 @@ class Forge2DGame extends FlameGame {
 
   Vector2 screenToFlameWorld(Vector2 position) {
     return screenToWorld(position)..y *= -1;
-  }
-
-  @override
-  @mustCallSuper
-  void lifecycleStateChange(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-      case AppLifecycleState.inactive:
-        if (_pausedBecauseBackgrounded) {
-          resumeEngine();
-        }
-      case AppLifecycleState.paused:
-      case AppLifecycleState.detached:
-      case AppLifecycleState.hidden:
-        if (pauseWhenBackgrounded && !paused) {
-          pauseEngine();
-          _pausedBecauseBackgrounded = true;
-        }
-    }
-  }
-
-  @override
-  void pauseEngine() {
-    _pausedBecauseBackgrounded = false;
-    super.pauseEngine();
-  }
-
-  @override
-  void resumeEngine() {
-    _pausedBecauseBackgrounded = false;
-    super.resumeEngine();
   }
 }

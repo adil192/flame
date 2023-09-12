@@ -24,6 +24,7 @@ class FlameGame extends ComponentTreeRoot
   FlameGame({
     super.children,
     Camera? camera,
+    this.pauseWhenBackgrounded = false,
   }) {
     assert(
       Component.staticGameInstance == null,
@@ -37,6 +38,14 @@ class FlameGame extends ComponentTreeRoot
 
   @internal
   late final List<ComponentsNotifier> notifiers = [];
+
+  /// Whether the game should pause when the app is backgrounded.
+  ///
+  /// If true, the first update after the app is foregrounded will be skipped.
+  ///
+  /// Defaults to false.
+  bool pauseWhenBackgrounded;
+  bool _pausedBecauseBackgrounded = false;
 
   /// The camera translates the coordinate space after the viewport is applied.
   @Deprecated('''
@@ -216,5 +225,36 @@ class FlameGame extends ComponentTreeRoot
         callback(notifier);
       }
     }
+  }
+
+  @override
+  @mustCallSuper
+  void lifecycleStateChange(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+      case AppLifecycleState.inactive:
+        if (_pausedBecauseBackgrounded) {
+          resumeEngine();
+        }
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.hidden:
+        if (pauseWhenBackgrounded && !paused) {
+          pauseEngine();
+          _pausedBecauseBackgrounded = true;
+        }
+    }
+  }
+
+  @override
+  void pauseEngine() {
+    _pausedBecauseBackgrounded = false;
+    super.pauseEngine();
+  }
+
+  @override
+  void resumeEngine() {
+    _pausedBecauseBackgrounded = false;
+    super.resumeEngine();
   }
 }
