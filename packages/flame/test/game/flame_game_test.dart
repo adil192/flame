@@ -693,8 +693,7 @@ void main() {
         });
       });
     });
-  
-    
+
     group('pauseWhenBackgrounded:', () {
       testWithFlameGame('true', (game) async {
         game.pauseWhenBackgrounded = true;
