@@ -61,7 +61,7 @@ class Forge2DGame extends FlameGame {
       case AppLifecycleState.paused:
       case AppLifecycleState.detached:
       case AppLifecycleState.hidden:
-        if (pauseWhenBackgrounded) {
+        if (pauseWhenBackgrounded && !paused) {
           pauseEngine();
           _pausedBecauseBackgrounded = true;
         }
