@@ -41,8 +41,6 @@ class FlameGame extends ComponentTreeRoot
 
   /// Whether the game should pause when the app is backgrounded.
   ///
-  /// If true, the first update after the app is foregrounded will be skipped.
-  ///
   /// Defaults to false.
   bool pauseWhenBackgrounded;
   bool _pausedBecauseBackgrounded = false;
