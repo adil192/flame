@@ -1,5 +1,3 @@
-import 'dart:ui' show AppLifecycleState;
-
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:test/test.dart';
 
