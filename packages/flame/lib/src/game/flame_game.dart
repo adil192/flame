@@ -24,7 +24,6 @@ class FlameGame extends ComponentTreeRoot
   FlameGame({
     super.children,
     Camera? camera,
-    this.pauseWhenBackgrounded = false,
   }) {
     assert(
       Component.staticGameInstance == null,
@@ -222,7 +221,7 @@ class FlameGame extends ComponentTreeRoot
   /// Whether the game should pause when the app is backgrounded.
   ///
   /// Defaults to false.
-  bool pauseWhenBackgrounded;
+  bool pauseWhenBackgrounded = false;
   bool _pausedBecauseBackgrounded = false;
 
   @override

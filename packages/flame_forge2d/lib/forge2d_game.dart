@@ -8,7 +8,6 @@ class Forge2DGame extends FlameGame {
     double zoom = defaultZoom,
     Camera? camera,
     ContactListener? contactListener,
-    super.pauseWhenBackgrounded,
   })  : world = World(gravity ?? defaultGravity),
         super(camera: camera ?? Camera()) {
     // ignore: deprecated_member_use
