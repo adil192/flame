@@ -39,12 +39,6 @@ class FlameGame extends ComponentTreeRoot
   @internal
   late final List<ComponentsNotifier> notifiers = [];
 
-  /// Whether the game should pause when the app is backgrounded.
-  ///
-  /// Defaults to false.
-  bool pauseWhenBackgrounded;
-  bool _pausedBecauseBackgrounded = false;
-
   /// The camera translates the coordinate space after the viewport is applied.
   @Deprecated('''
     In the future (maybe as early as v1.9.0) this camera will be removed,
@@ -224,6 +218,12 @@ class FlameGame extends ComponentTreeRoot
       }
     }
   }
+
+  /// Whether the game should pause when the app is backgrounded.
+  ///
+  /// Defaults to false.
+  bool pauseWhenBackgrounded;
+  bool _pausedBecauseBackgrounded = false;
 
   @override
   @mustCallSuper
