@@ -227,6 +227,7 @@ class FlameGame extends ComponentTreeRoot
   @override
   @mustCallSuper
   void lifecycleStateChange(AppLifecycleState state) {
+    print('lifecycleStateChange: $state');
     switch (state) {
       case AppLifecycleState.resumed:
       case AppLifecycleState.inactive:
